@@ -2,8 +2,8 @@ import {type Options} from "recordrtc";
 
 export interface IRecordRTCOptions {
 	countDownSec?: number;
-	beforeRecordingHook?: () => void | Promise<void>;
-	afterRecordingHook?: () => void | Promise<void>;
+	beforeRecordingStartHook?: () => void | Promise<void>;
+	afterRecordingStartHook?: () => void | Promise<void>;
 	rtcOptions?: Options;
 }
 

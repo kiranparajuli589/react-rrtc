@@ -43,12 +43,15 @@ import React from 'react';
 import {useRecordRTC} from 'record-rrtc';
 
 const MyComponent = () => {
+  const [timerStatus, setTimerStatus] = React.useState(false);
 	const options = {
 		countDownSec: 5, // Optional: Countdown before recording starts in seconds
 		rtcOptions: {}, // Optional: Additional options for RecordRTC
-		afterRecordingHook: async () => {
-			// Optional: Callback after recording starts
-			console.log('Recording started');
+		beforeRecordingStartHook: () => {
+			setTimerStatus(true);
+		},
+		afterRecordingStartHook: async () => {
+			setTimerStatus(false);
 		},
 	};
 

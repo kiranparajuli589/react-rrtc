@@ -1,0 +1,9 @@
+.github/
+.idea/
+.vscode/
+.editorconfig
+.gitignore
+eslint.config.mjs
+pnpm-lock.yaml
+rollup.config.ts
+tsconfig.json

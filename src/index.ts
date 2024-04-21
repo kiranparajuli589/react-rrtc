@@ -67,7 +67,7 @@ export const useRecordRTC = (options: IRecordRTCOptions) => {
 	const startRecording = async (stream: MediaStream, type: "audio"|"video" = "audio") => {
 		setRecordStream(stream);
 		await new Promise((resolve) => setTimeout(async () => {
-			options.afterRecordingHook && await options.afterRecordingHook();
+			options.afterRecordingStartHook && await options.afterRecordingStartHook();
 			const recorder = new RecordRTCPromisesHandler(stream, {
 				...options.rtcOptions || {},
 				type,
