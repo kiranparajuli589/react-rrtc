@@ -1,0 +1,24 @@
+{
+	"compilerOptions": {
+		"module": "esnext",
+		"declaration": true,
+		"declarationDir": "types",
+		"sourceMap": true,
+		"outDir": "dist",
+		"moduleResolution": "node",
+		"emitDeclarationOnly": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"lib": [
+			"dom",
+			"esnext",
+			"scripthost",
+		]
+	},
+	"include": [
+		"src",
+		"eslint.config.mjs",
+		"rollup.config.ts"
+	]
+}
