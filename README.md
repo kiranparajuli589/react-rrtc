@@ -48,9 +48,6 @@ const MyComponent = () => {
 	const options = {
 		countDownSec: 5, // Optional: Countdown before recording starts in seconds
 		rtcOptions: {}, // Optional: Additional options for RecordRTC
-		beforeRecordingStartHook: () => {
-			setTimerStatus(true);
-		},
 		afterRecordingStartHook: async () => {
 			setTimerStatus(false);
 		},
@@ -75,6 +72,7 @@ const MyComponent = () => {
 	return (
 		<div>
 			<button onClick={async () => {
+				setTimerStatus(true);
 				const stream = await getScreenStream({video: true});
 				await startRecording(stream, 'video');
 			}}>Start Recording

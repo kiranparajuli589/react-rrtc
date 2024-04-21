@@ -1,5 +1,5 @@
 import {RecordRTCPromisesHandler} from "recordrtc";
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {IRecordRTCOptions} from "./types";
 
 export const useRecordRTC = (options: IRecordRTCOptions) => {
@@ -44,27 +44,7 @@ export const useRecordRTC = (options: IRecordRTCOptions) => {
 		}
 	}
 
-	const addStreamStopListener = (stream: MediaStream, callback: () => void) => {
-		if (!stream) return;
-		const stopListener = () => {
-			callback();
-		};
-		stream.addEventListener('ended', stopListener);
-		stream.addEventListener('inactive', stopListener);
-		stream.getTracks().forEach(track => track.addEventListener('ended', stopListener));
-	};
-
-	useEffect(() => {
-		if (recordStream) {
-			addStreamStopListener(recordStream, stopRecording);
-		}
-	}, [recordStream]);
-
-	useEffect(() => {
-		console.log(recorder);
-	}, [recorder])
-
-	const startRecording = async (stream: MediaStream, type: "audio"|"video" = "audio") => {
+	const startRecording = async (stream: MediaStream, type: "audio"|"video" = "audio"): Promise<RecordRTCPromisesHandler> => {
 		setRecordStream(stream);
 		await new Promise((resolve) => setTimeout(async () => {
 			options.afterRecordingStartHook && await options.afterRecordingStartHook();
@@ -72,22 +52,27 @@ export const useRecordRTC = (options: IRecordRTCOptions) => {
 				...options.rtcOptions || {},
 				type,
 			})
+			// helps release the camera on stopRecording
+			recorder.stream = stream;
 			setRecorder(recorder);
 			await recorder.startRecording();
+
+			if (type === "video") {
+				previewVideoRef.current.muted = true;
+				previewVideoRef.current.autoplay = true;
+				previewVideoRef.current.srcObject = stream;
+			}
+
+			if (type === "audio") {
+				audioPreviewRef.current.muted = true;
+				audioPreviewRef.current.autoplay = true;
+				audioPreviewRef.current.srcObject = stream;
+			}
+
 			resolve(recorder);
 		}, options.countDownSec * 1000));
 	};
 
-	const stopRecording = async () => {
-		if (!recorder) return;
-
-		if (recorder) {
-			await recorder.stopRecording();
-			const blob = await recorder.getBlob();
-			setBlob(blob);
-			setRecorderState('stopped');
-		}
-	}
 
 	const pauseRecording = async () => {
 		if (!recorder || await (recorder.getState()) !== "recording") return;
@@ -110,6 +95,39 @@ export const useRecordRTC = (options: IRecordRTCOptions) => {
 		}
 		await recorder.resumeRecording();
 	}
+
+	const stopRecording = async () => {
+		if (!recorder) return;
+		await recorder.stopRecording();
+		await stopRecordingCallback();
+	}
+	const stopRecordingCallback = async () => {
+		const blob = await recorder.getBlob();
+		setBlob(blob);
+		setRecorderState('stopped');
+
+		if (previewVideoRef.current) {
+			previewVideoRef.current.srcObject = null;
+			previewVideoRef.current.src = URL.createObjectURL(blob);
+		}
+		if (audioPreviewRef.current) {
+			audioPreviewRef.current.srcObject = null;
+			audioPreviewRef.current.src = URL.createObjectURL(blob);
+		}
+
+		// stop the stream
+		recordStream.getTracks().forEach(track => track.stop());
+
+		// reset recorder's state
+		await recorder.reset();
+
+		// clear the memory
+		await recorder.destroy();
+
+		// so that we can record again
+		setRecorder(null);
+	}
+
 
 	return {
 		// States

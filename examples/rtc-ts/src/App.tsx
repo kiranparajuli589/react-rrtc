@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import {useRecordRTC} from "react-rrtc";
 
 function App() {
@@ -7,9 +7,6 @@ function App() {
 	const options = {
 		countDownSec: 5, // Optional: Countdown before recording starts in seconds
 		rtcOptions: {}, // Optional: Additional options for RecordRTC
-		beforeRecordingStartHook: () => {
-			setTimerStatus(true);
-		},
 		afterRecordingStartHook: async () => {
 			setTimerStatus(false);
 		},
@@ -33,16 +30,20 @@ function App() {
 
 	return (
 		<div className="App">
-			<button onClick={async () => {
-				const stream = await getScreenStream({video: true});
-				await startRecording(stream, 'video');
-			}}>Start Recording
-			</button>
-			<button onClick={pauseRecording}>Pause Recording</button>
-			<button onClick={resumeRecording}>Resume Recording</button>
-			<button onClick={stopRecording}>Stop Recording</button>
-			<video ref={previewVideoRef} controls height={400} />
-			<audio ref={audioPreviewRef} controls/>
+			<div className="App--preview">
+				<video ref={previewVideoRef} controls height={400} />
+				<audio ref={audioPreviewRef} controls/>
+			</div>
+			<div className="App--actions">
+				<button onClick={async () => {
+					const stream = await getScreenStream({video: true});
+					await startRecording(stream, 'video');
+				}}>Start Recording
+				</button>
+				<button onClick={pauseRecording}>Pause Recording</button>
+				<button onClick={resumeRecording}>Resume Recording</button>
+				<button onClick={stopRecording}>Stop Recording</button>
+			</div>
 		</div>
 	);
 }

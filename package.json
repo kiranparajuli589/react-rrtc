@@ -1,6 +1,6 @@
 {
 	"name": "react-rrtc",
-	"version": "0.0.3",
+	"version": "0.0.5",
 	"description": "Record RTC for ReactJS",
 	"main": "dist/cjs/index.js",
 	"module": "dist/esm/index.js",
