@@ -1,6 +1,6 @@
 {
 	"name": "react-rrtc",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Record RTC for ReactJS",
 	"main": "dist/cjs/index.js",
 	"module": "dist/esm/index.js",
@@ -34,8 +34,7 @@
 		"url": "https://github.com/kiranparajuli589/react-rrtc/issues"
 	},
 	"peerDependencies": {
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react": "^18.2.0"
 	},
 	"dependencies": {
 		"recordrtc": "^5.6.2"
@@ -45,9 +44,9 @@
 		"@eslint/js": "^9.1.1",
 		"@rollup/plugin-commonjs": "^25.0.7",
 		"@rollup/plugin-node-resolve": "^15.2.3",
+		"@rollup/plugin-terser": "^0.4.4",
 		"@rollup/plugin-typescript": "^11.1.6",
 		"@types/react": "^18.2.79",
-		"@types/react-dom": "^18.2.25",
 		"@types/recordrtc": "^5.6.14",
 		"@typescript-eslint/eslint-plugin": ">=7.0.2",
 		"@typescript-eslint/parser": ">=7.0.2",
@@ -55,6 +54,7 @@
 		"eslint-config-xo-typescript": "^4.0.0",
 		"eslint-plugin-react": "^7.34.1",
 		"globals": "^15.0.0",
+		"react": "^18.2.0",
 		"rollup": "^4.16.0",
 		"rollup-plugin-dts": "^6.1.0",
 		"tslib": "^2.6.2",

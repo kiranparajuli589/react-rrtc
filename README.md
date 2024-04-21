@@ -3,12 +3,13 @@
 ## Overview
 
 `react-rrtc` is a ReactJS plugin that provides a convenient hook for recording audio and video
-streams using the RecordRTC library. This plugin simplifies the process of recording media streams
+streams using the [RecordRTC](https://recordrtc.org/) library. This plugin simplifies the process of
+recording media streams
 within your React applications.
 
 ## Features
 
-- Record audio and video streams with ease.
+- Record audio, screen and video streams with ease.
 - Pause and resume recording functionality.
 - Access to recorded media as Blob objects.
 - Compatibility with various media stream configurations.
@@ -16,7 +17,7 @@ within your React applications.
 
 ## Installation
 
-To install react-rrtc, simply run:
+To install `react-rrtc`, simply run:
 
 ```bash
 npm install react-rrtc
@@ -43,7 +44,7 @@ import React from 'react';
 import {useRecordRTC} from 'react-rrtc';
 
 const MyComponent = () => {
-  const [timerStatus, setTimerStatus] = React.useState(false);
+	const [timerStatus, setTimerStatus] = React.useState(false);
 	const options = {
 		countDownSec: 5, // Optional: Countdown before recording starts in seconds
 		rtcOptions: {}, // Optional: Additional options for RecordRTC

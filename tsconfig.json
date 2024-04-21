@@ -13,12 +13,13 @@
 		"lib": [
 			"dom",
 			"esnext",
-			"scripthost",
+			"scripthost"
 		]
 	},
 	"include": [
 		"src",
 		"eslint.config.mjs",
-		"rollup.config.ts"
+		"rollup.config.ts",
+		"tsconfig.json"
 	]
 }

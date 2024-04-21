@@ -6,10 +6,3 @@ export interface IRecordRTCOptions {
 	afterRecordingStartHook?: () => void | Promise<void>;
 	rtcOptions?: Options;
 }
-
-export interface IVideoPositionOption {
-	width: number;
-	height: number;
-	top: number;
-	left: number;
-}
